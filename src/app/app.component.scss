@@ -1,0 +1,94 @@
+.wrap{
+	
+	.header{
+
+	}
+
+	.todos-list{
+
+		.inner{
+			width: 100%;
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+			align-items: flex-start;		
+			padding-bottom: 10px;		
+
+			.checkbox-area{
+				width: 50px;
+			}
+
+			.title-area{
+				width: calc(100% - 100px);
+
+				&.checked{
+					text-decoration:line-through;
+					color: #ccc;
+				}
+			}
+
+			.remove-area{
+				width: 50px;
+
+				.icon{
+					display: none;
+					cursor: pointer;
+				}
+
+				.material-icons{
+					color: red;
+					font-size: 14px;
+				}
+			}
+
+			&.hovered{
+
+				.remove-area{
+
+					.icon{
+						display: block;
+					}
+				}
+			}
+		
+		}
+	}
+
+	.actions{
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: flex-start;	
+
+		.inner{
+
+			&.cnt{
+				width: 20%;
+				display: flex;
+				flex-wrap: nowrap;
+				justify-content: flex-start;
+				align-items: flex-start;					
+			}
+
+			&.visibility{
+				display: flex;
+				flex-wrap: nowrap;
+				justify-content: center;
+				align-items: flex-start;				
+				width: 60%;
+
+				.btn{
+					margin: 0 5px;
+				}
+			}
+
+			&.clear{
+				width: 20%;
+				display: flex;
+				flex-wrap: nowrap;
+				justify-content: flex-end;
+				align-items: flex-end;					
+			}
+		}
+	}
+}

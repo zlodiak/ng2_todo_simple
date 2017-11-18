@@ -1,10 +1,87 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { TodosService } from './services/todos.service';
+import { Todo } from './types/todo';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'app';
+export class AppComponent implements OnInit {
+
+  private newTodo: string = '';
+  private todos: Todo[] = [];
+  private checkboxes: Object = {};
+  private activeBtn: string = 'All';
+
+  constructor(private todosService: TodosService) {
+  	this.todos = todosService.getTodos();
+  	console.log(this.todos);
+  	this.todos.forEach((todo) => {
+  		this.checkboxes[todo.id] = todo.isChecked;
+  	});	
+   };
+
+  ngOnInit() {
+		this.setActiveBtn(this.activeBtn);
+
+
+  };
+
+  private setActiveBtn(str) {
+  	this.activeBtn = str;   	
+  }
+
+  private hideRemoveIcon(id) {
+  	let todoId = 'todo_' + id;
+  	let el = document.getElementById(todoId);
+		el.classList.remove('hovered');
+  };
+
+  private showRemoveIcon(id) {
+  	let todoId = 'todo_' + id;
+  	let el = document.getElementById(todoId);
+  	el.classList.add('hovered');
+  };
+
+  private toggleTodoState(id, state): void {
+  	console.log(id, state);
+
+  	let todos = this.todosService.getTodos();
+
+  	todos.forEach((todo) => {
+  		if(todo.id === id) {
+  			todo.isChecked = state;
+  			console.log(todo);
+  			this.todosService.rewriteTodos(todos);
+  			return;
+  		}
+  	});
+  };
+
+  private renderTodo(todo): void {
+  	this.todos.push(todo);
+  };
+
+  private createTodo(): void {
+  	console.log('create new todo:', this.newTodo);
+
+  	if(!this.newTodo.trim().length) { return; }
+
+  	let newTodoObj: Todo = {
+  		id: Date.now() + '_' + performance.now(),
+  		title: this.newTodo.trim(),
+  		isChecked: false,
+  		dateUnix: Date.now()
+
+  	};
+
+  	this.todosService.addTodo(newTodoObj);
+  	this.renderTodo(newTodoObj);
+
+  	this.newTodo = '';  	
+  }
+
 }

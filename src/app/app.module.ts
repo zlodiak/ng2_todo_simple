@@ -1,20 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { 	MatButtonModule, 
+					MatCardModule,
+					MatInputModule,
+          MatCheckboxModule,
+          MatIconModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
+import { TodosService } from './services/todos.service';
+import { TodosPipe } from './pipes/todos.pipe';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TodosPipe
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
+  	MatInputModule,
+  	FormsModule,
+  	MatCardModule,
+  	BrowserAnimationsModule,
+    BrowserModule
   ],
-  providers: [],
+  providers: [TodosService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
