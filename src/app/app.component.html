@@ -31,7 +31,7 @@
   </div>
 
   <div class="actions">
-    <div class="inner cnt">{{ (todos | todos).length }}</div>
+    <div class="inner cnt">{{ (todos | todos).length }} items left</div>
 
     <div class="inner visibility">
       <button class="btn btn-common" 
@@ -54,6 +54,12 @@
               (click)="setActiveBtn('Completed')">Completed</button>
     </div>
 
-    <div class="inner clear"></div>
+    <div class="inner clear">
+      <button class="btn btn-common" 
+                    id="clearCompleted" 
+                    type="button" 
+                    mat-button 
+                    (click)="clearCompleted()">Clear completed</button>
+    </div>
   </div>
 </mat-card>

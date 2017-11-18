@@ -22,12 +22,24 @@ export class AppComponent implements OnInit {
 		this.setActiveBtn(this.activeBtn);
   };
 
+  private clearCompleted(): void {
+  	let todos = this.todosService.getTodos();
+
+  	todos.forEach((todo) => {
+  		if(todo.isChecked === true) {
+  			this.todosService.removeTodo(todo.id);
+  		}
+  	});  	
+
+  	this.ngOnInit();
+  };
+
   private removeTodo(id): void {
   	this.todosService.removeTodo(id);
   	this.ngOnInit();
   };
 
-  private setActiveBtn(btn) {  	
+  private setActiveBtn(btn): void {  	
   	this.activeBtn = btn;   
   	this.todos = this.todosService.getTodos();
 
@@ -49,7 +61,7 @@ export class AppComponent implements OnInit {
   	}); 
   }
 
-  private changeRemoveIcon(id, state) {
+  private changeRemoveIcon(id, state): void {
   	let todoId = 'todo_' + id;
   	let el = document.getElementById(todoId);
 
