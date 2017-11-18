@@ -2,7 +2,7 @@
   <div class="header">
     <mat-form-field class="todo-input-outer">
       <input  class="todo-input" 
-              matInput placeholder="Задача" 
+              matInput placeholder="Новая задача" 
               (blur)="createTodo()"
               (keyup.enter)="createTodo()"
               [(ngModel)]="newTodo">
@@ -13,8 +13,8 @@
     <div  class="inner item" 
           id="todo_{{ todo.id }}"
           *ngFor="let todo of todos" 
-          (mouseenter)="showRemoveIcon(todo.id)" 
-          (mouseleave)="hideRemoveIcon(todo.id)">
+          (mouseenter)="changeRemoveIcon(todo.id, 'enter')" 
+          (mouseleave)="changeRemoveIcon(todo.id, 'leave')">
       <div class="checkbox-area">
         <mat-checkbox [(ngModel)]="checkboxes[todo.id]" 
                       (change)="toggleTodoState(todo.id, checkboxes[todo.id])"></mat-checkbox>
@@ -23,18 +23,35 @@
       <div class="inner title-area" [ngClass]="{checked: checkboxes[todo.id]}">{{ todo.title }}</div>
 
       <div class="inner remove-area">
-        <div class="icon"><i class="material-icons">close</i></div>
+        <div class="icon">
+          <i class="material-icons" (click)="removeTodo(todo.id)">close</i>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="actions">
-    <div class="inner cnt">{{ todos.length }}</div>
+    <div class="inner cnt">{{ (todos | todos).length }}</div>
 
     <div class="inner visibility">
-      <button class="btn btn-common" id="All" type="button" mat-button [ngClass]="{active: activeBtn == 'All'}" (click)="setActiveBtn('All')">All</button>
-      <button class="btn btn-common" id="Active" type="button" mat-button [ngClass]="{active: activeBtn == 'Active'}" (click)="setActiveBtn('Active')">Active</button>
-      <button class="btn btn-common" id="Completed" type="button" mat-button [ngClass]="{active: activeBtn == 'Completed'}" (click)="setActiveBtn('Completed')">Completed</button>
+      <button class="btn btn-common" 
+              id="All" type="button" 
+              mat-button 
+              [ngClass]="{active: activeBtn == 'All'}" 
+              (click)="setActiveBtn('All')">All</button>
+
+      <button class="btn btn-common" 
+              id="Active" type="button" 
+              mat-button 
+              [ngClass]="{active: activeBtn == 'Active'}" 
+              (click)="setActiveBtn('Active')">Active</button>
+
+      <button class="btn btn-common" 
+              id="Completed" 
+              type="button" 
+              mat-button 
+              [ngClass]="{active: activeBtn == 'Completed'}" 
+              (click)="setActiveBtn('Completed')">Completed</button>
     </div>
 
     <div class="inner clear"></div>

@@ -16,15 +16,18 @@ export class AppComponent implements OnInit {
   private checkboxes: Object = {};
   private activeBtn: string = 'All';
 
-  constructor(private todosService: TodosService) {
-
-   };
+  constructor(private todosService: TodosService) {};
 
   ngOnInit() {
 		this.setActiveBtn(this.activeBtn);
   };
 
-  private setActiveBtn(btn) {  	  	
+  private removeTodo(id): void {
+  	this.todosService.removeTodo(id);
+  	this.ngOnInit();
+  };
+
+  private setActiveBtn(btn) {  	
   	this.activeBtn = btn;   
   	this.todos = this.todosService.getTodos();
 
@@ -38,7 +41,6 @@ export class AppComponent implements OnInit {
   	this.todos = [];
 
   	allTodos.forEach((todo) => {
-  		console.log(this.activeBtn, todo.isChecked);
   		if(this.activeBtn == 'Active' && todo.isChecked === false) {
   			this.todos.push(todo);
   		} else if(this.activeBtn == 'Completed' && todo.isChecked === true){
@@ -47,21 +49,18 @@ export class AppComponent implements OnInit {
   	}); 
   }
 
-  private hideRemoveIcon(id) {
+  private changeRemoveIcon(id, state) {
   	let todoId = 'todo_' + id;
   	let el = document.getElementById(todoId);
-		el.classList.remove('hovered');
-  };
 
-  private showRemoveIcon(id) {
-  	let todoId = 'todo_' + id;
-  	let el = document.getElementById(todoId);
-  	el.classList.add('hovered');
+  	if(state == 'enter') {
+			el.classList.add('hovered');
+  	} else if(state == 'leave') {
+			el.classList.remove('hovered');	
+  	}		
   };
 
   private toggleTodoState(id, state): void {
-  	console.log(id, state);
-
   	let todos = this.todosService.getTodos();
 
   	todos.forEach((todo) => {
@@ -72,6 +71,8 @@ export class AppComponent implements OnInit {
   			return;
   		}
   	});
+
+  	this.setActiveBtn(this.activeBtn);
   };
 
   private renderTodo(todo): void {
@@ -79,8 +80,6 @@ export class AppComponent implements OnInit {
   };
 
   private createTodo(): void {
-  	console.log('create new todo:', this.newTodo);
-
   	if(!this.newTodo.trim().length) { return; }
 
   	let newTodoObj: Todo = {
@@ -95,6 +94,8 @@ export class AppComponent implements OnInit {
   	this.renderTodo(newTodoObj);
 
   	this.newTodo = '';  	
+
+  	this.ngOnInit();
   }
 
 }
