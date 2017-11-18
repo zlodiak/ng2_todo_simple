@@ -15,11 +15,26 @@ export class AppComponent implements OnInit {
   private todos: Todo[] = [];
   private checkboxes: Object = {};
   private activeBtn: string = 'All';
+  private isAllChecked: boolean = false;
 
   constructor(private todosService: TodosService) {};
 
   ngOnInit() {
 		this.setActiveBtn(this.activeBtn);
+  };
+
+  private toggleAllChecked(): void {
+  	let todos = this.todosService.getTodos();
+  	let newTodos: Todo[] = [];
+
+  	todos.forEach((todo) => {
+  		this.checkboxes[todo.id] = this.isAllChecked;
+  		todo.isChecked = this.isAllChecked;
+  		newTodos.push(todo);
+  	});
+
+  	this.todosService.rewriteTodos(newTodos);
+  	this.isAllChecked = false;
   };
 
   private clearCompleted(): void {
@@ -78,7 +93,6 @@ export class AppComponent implements OnInit {
   	todos.forEach((todo) => {
   		if(todo.id === id) {
   			todo.isChecked = state;
-  			console.log(todo);
   			this.todosService.rewriteTodos(todos);
   			return;
   		}

@@ -1,8 +1,14 @@
 <mat-card class="wrap">
   <div class="header">
+    <div class="all-checked">
+      <mat-checkbox [(ngModel)]="isAllChecked" 
+                    *ngIf="todos.length > 0"
+                    (change)="toggleAllChecked()"></mat-checkbox>
+    </div>
+
     <mat-form-field class="todo-input-outer">
       <input  class="todo-input" 
-              matInput placeholder="Новая задача" 
+              matInput placeholder="New task" 
               (blur)="createTodo()"
               (keyup.enter)="createTodo()"
               [(ngModel)]="newTodo">
@@ -63,3 +69,8 @@
     </div>
   </div>
 </mat-card>
+
+<div class="author">
+  <div class="copyright">© Sergey Kalinin 2017</div>
+  <a class="github" href="https://zlodiak.github.io/ng2/todo/0/">https://zlodiak.github.io/ng2/todo/0/</a>
+</div>

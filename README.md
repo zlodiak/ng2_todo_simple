@@ -1,3 +1,7 @@
+example todo application. simple version.
+
+live demo here: https://zlodiak.github.io/ng2/todo/0/
+
 # Todo
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.

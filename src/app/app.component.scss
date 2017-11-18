@@ -1,10 +1,22 @@
 .wrap{
 	
 	.header{
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: flex-start;
+		align-items: flex-start;	
 
+		.all-checked{
+			width: 50px;
+		}
+
+		.todo-input-outer{
+			width: calc(100% - 50px;);
+		}
 	}
 
 	.todos-list{
+		padding-bottom: 20px;
 
 		.inner{
 			width: 100%;
@@ -90,5 +102,21 @@
 				align-items: flex-end;					
 			}
 		}
+	}
+}
+
+.author{
+	padding-top: 30px;
+	text-align: center;
+	font-family: Helvetica;
+
+	.copyright{
+		padding-bottom: 10px;
+		display: inine-block;
+	}
+
+	.github{
+		color: #000;		
+		font-size: 70%;
 	}
 }
