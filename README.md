@@ -1,6 +1,6 @@
 example todo application. simple version.
 
-live demo here: https://zlodiak.github.io/ng2/todo/0/
+live demo here: https://zlodiak.github.io/ng2/todo/1/
 
 # Todo
 
