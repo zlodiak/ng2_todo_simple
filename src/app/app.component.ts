@@ -17,21 +17,34 @@ export class AppComponent implements OnInit {
   private activeBtn: string = 'All';
 
   constructor(private todosService: TodosService) {
-  	this.todos = todosService.getTodos();
-  	console.log(this.todos);
-  	this.todos.forEach((todo) => {
-  		this.checkboxes[todo.id] = todo.isChecked;
-  	});	
+
    };
 
   ngOnInit() {
 		this.setActiveBtn(this.activeBtn);
-
-
   };
 
-  private setActiveBtn(str) {
-  	this.activeBtn = str;   	
+  private setActiveBtn(btn) {  	  	
+  	this.activeBtn = btn;   
+  	this.todos = this.todosService.getTodos();
+
+  	this.todos.forEach((todo) => {
+  		this.checkboxes[todo.id] = todo.isChecked;
+  	});  	
+
+  	if(this.activeBtn == 'All') { return; }
+
+  	let allTodos = this.todos;
+  	this.todos = [];
+
+  	allTodos.forEach((todo) => {
+  		console.log(this.activeBtn, todo.isChecked);
+  		if(this.activeBtn == 'Active' && todo.isChecked === false) {
+  			this.todos.push(todo);
+  		} else if(this.activeBtn == 'Completed' && todo.isChecked === true){
+				this.todos.push(todo);
+  		}
+  	}); 
   }
 
   private hideRemoveIcon(id) {
